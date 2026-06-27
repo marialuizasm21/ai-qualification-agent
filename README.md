@@ -1,359 +1,90 @@
-# Agente de IA para Qualificação de Leads com Integração Metabase
+# Agente de Inteligência de Mercado Toqan
 
-Agente de inteligência artificial que automatiza a qualificação de leads com conexão direta ao banco de dados, validação multicamadas e exportação automática de 24 campos validados para a planilha de nutrição.
+Sistema avançado de inteligência de mercado e qualificação desenvolvido com **engenharia de prompts, automação assistida por IA (Toqan, IA do Grupo Prosus) e integração direta de dados via API**, criado para transformar o processo de qualificação de leads em um fluxo investigativo estruturado, auditável e altamente comercial.
 
----
-
-## O Problema
-
-O processo de qualificação de leads era 100% manual e extremamente trabalhoso:
-
-### Coleta de Dados Fragmentada
-- Qualificadores precisavam abrir **múltiplas ferramentas**: Metabase, Google, HubSpot, redes sociais
-- Busca manual de informações demorava entre 25 a 40 minutos por lead
-- Dados históricos do Metabase exigiam conhecimento técnico para consultar
-- Estimativas de GMV substituíam dados reais do banco por falta de acesso fácil
-
-### Digitação Manual e Erros
-- **24 campos diferentes** preenchidos manualmente, um por um
-- Erros de digitação frequentes (CNPJ, telefone, email)
-- Campos obrigatórios deixados vazios geravam falhas na importação
-- Inconsistências de formatação quebravam integração com HubSpot
-
-### Falta de Padronização
-- Cada qualificador escrevia dossiês de forma diferente
-- Nomes em MAIÚSCULAS, estados sem padrão "Nome (UF)"
-- Uso incorreto de menus fechados (plataforma concorrente, segmento)
-- Sem rastreabilidade das fontes de informação
-
-### Sem Validação Prévia
-- Leads eram enviados para importação sem verificação
-- Erros só descobertos depois no HubSpot
-- Retrabalho constante de correção pós-importação
-- Qualidade da base de dados comprometida
-
-**Impacto:** 40 minutos por lead, alto índice de erros, retrabalho constante, dados estimados ao invés de reais, falta de padronização.
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maria-luiza-moraes-98a6b22a8/)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marialuizasm21)
 
 ---
 
-## A Solução
+## Skills Técnicas Aplicadas
 
-Desenvolvi um **agente de IA completo** baseado em **Claude (Anthropic)** com arquitetura de prompt estruturado de alta complexidade.
+<div align="center">
 
-### Integração Direta com Banco de Dados
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Metabase](https://img.shields.io/badge/Metabase-509EE3?style=for-the-badge&logo=metabase&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Google Sheets](https://img.shields.io/badge/Google_Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)
+![HubSpot](https://img.shields.io/badge/HubSpot-FF7A59?style=for-the-badge&logo=hubspot&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Regex](https://img.shields.io/badge/Regex-000000?style=for-the-badge)
+![GitHub Repo](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
-**Conexão via API Metabase:**
-- Sistema se conecta diretamente ao banco de dados através da API do Metabase
-- Executa queries SQL em tempo real durante a qualificação
-- Extrai automaticamente dados históricos reais do produtor
-
-**Dados Extraídos Automaticamente:**
-- GMV histórico total e por período
-- User IDs ativos na plataforma
-- Quantidade de eventos publicados
-- Último mês com GMV registrado
-- Ticket médio e público médio
-- Segmento dominante
-- Status comercial provável (Cliente ativo, Churn, Inativo)
-
-**Benefício:** Substituição de estimativas por **dados reais do banco**, eliminando necessidade de abrir Metabase manualmente.
-
-### Pesquisa Ativa na Web
-
-Além do Metabase, o agente executa:
-- Pesquisa em Google sobre empresa e decisores
-- Consulta em redes sociais (LinkedIn, Instagram)
-- Identificação de plataformas concorrentes
-- Mapeamento de eventos e histórico comercial
-
-**Política de Zero Alucinação:**
-- Se não há dado confiável, campo fica vazio
-- Toda informação deve ser verificável
-- Nunca inventa dados ou estimativas
-
-### Estrutura Hierárquica de Informações
-
-O agente organiza dados em camadas com funções específicas:
-
-**1. Resumo Metabase (Informativo - não exportado)**
-- Campo exclusivo para leitura rápida
-- 4-5 linhas com dados do banco
-- Aceita "não identificado" quando faltar dado
-- Serve para contexto, não vai para planilha
-
-**2. Histórico Sympla (Exportável - Coluna W)**
-- Síntese objetiva de 2-4 linhas
-- User IDs, status atual, negociações principais
-- Modelo padronizado obrigatório
-- Só preenche se tiver dado real, senão fica vazio
-
-**3. Histórico Comercial (Exportável - Coluna AA)**
-- Cronologia completa de negociações
-- Formato: Data | Negociação | Responsável | Resultado | Registro | Próximo passo
-- Uma linha por negociação
-- Rastreabilidade total
-
-**4. Contexto Adicional (Exportável - Coluna BJ)**
-- Inteligência estratégica para abordagem comercial
-- 3-4 linhas máximo
-- Posicionamento, público-alvo, timing ideal
-- Gatilhos para retomada de contato
-
-### Sistema de Validação Dupla
-
-**Primeiro Checkpoint - Pré-exportação:**
-- Verifica formatação de CNPJ (só números)
-- Valida telefone no padrão (XX) XXXXX-XXXX
-- Confirma estado no formato "Nome (UF)"
-- Checa menus fechados obrigatórios
-- Valida campos críticos preenchidos
-
-**Segundo Checkout - Confirmação:**
-- Busca automática da empresa na planilha (Nome + Data de hoje)
-- Mostra resultado da busca para confirmação
-- Aguarda comando explícito "Aprovar" ou "Ajustar"
-- Só exporta após aprovação do usuário
-
-**Se validação falhar:**
-- Lista TODOS os problemas encontrados
-- NÃO exporta
-- Explica o que precisa ser corrigido
-
-### Rastreabilidade Obrigatória
-
-Toda observação comercial deve responder:
-- **Quem** trouxe a informação (nome completo do responsável)
-- **Onde** estava registrada (negociação, tarefa, Slack, HubSpot)
-- **Quando** foi registrada (data quando disponível)
-- **Qual ID** relacionado (Deal ID, Task ID, User ID)
-- **Qual interpretação** comercial objetiva
-
-**Padrão:**
-"Segundo observação registrada por [Nome Completo] em [local/fonte/data]..."
-
-### Exportação Automática
-
-Após validação e aprovação:
-- Exporta **24 campos** diretamente para planilha
-- Mapeamento preciso (coluna W, AA, AB, AC... até BJ)
-- Campos não preenchidos: GMV (AQ), Status Sympla (V), Identificação HubSpot (X)
-- Execução em uma única operação
-- Zero digitação manual
-
-### Dossiês Profissionais Estruturados
-
-Gera relatórios investigativos seguindo estrutura narrativa padronizada:
-- Resumo Metabase (contexto)
-- Identificação completa do lead
-- Histórico e relacionamento Sympla
-- Histórico de negociações comerciais
-- Perfil do produtor e operação
-- Detalhes de concorrência
-- Contexto adicional estratégico
-- Demandas ferramentais identificadas
+</div>
 
 ---
 
-## Tecnologias
+## O Desafio vs. A Solução
 
-**Inteligência Artificial:**
-- Claude AI (Anthropic)
-- Prompt engineering avançado (arquitetura multicamadas)
-- Zero-hallucination policy
+**O Problema:** O processo de qualificação era 100% manual, repetitivo e fragmentado. Qualificadores precisavam abrir Metabase, HubSpot, Google e redes sociais para investigar um único lead, levando de 25 a 40 minutos. No Metabase, a análise exigia conhecimento de filtros complexos e muito tempo. Além disso, o preenchimento manual campo por campo na planilha gerava erros de formatação e falhas na importação para o CRM.
 
-**Integração de Dados:**
-- Metabase API (conexão direta com banco)
-- Queries SQL em tempo real
-- Google Sheets API (exportação automática)
-
-**Validação e Automação:**
-- Sistema de validação dupla (2 checkouts)
-- Normalização de dados (CNPJ, telefone, estado)
-- Mapeamento de 50 campos entre sistemas
-
-**Pesquisa e Coleta:**
-- Web search integration
-- Scraping estruturado de informações públicas
-- Cross-reference de múltiplas fontes
+**A Solução:** Para acabar com o trabalho manual e repetitivo, construí um agente de inteligência utilizando o **Toqan (plataforma de IA do Grupo Prosus)**. O agente se conecta diretamente ao Metabase via API, extrai dados reais em tempo real de acordo com as informações do produtor (o que contextualiza o histórico e a maturidade comercial) e exporta automaticamente 24 campos higienizados e validados.
 
 ---
 
-## Resultados
+## 🛠️ Arquitetura e Engenharia do Agente
 
-### Quantitativos
-- **50% de redução** no tempo de qualificação (40min → 20min)
-- **24 campos** exportados automaticamente
-- **Zero erros** de importação após validação dupla
-- **100% precisão** nos dados do Metabase (dados reais vs estimativas)
-- **Múltiplos leads** qualificados com sucesso em produção
+### 1. Integração de Dados Avançada: API, SQL e Metabase
+A verdadeira inteligência transacional do agente não vem apenas do LLM, mas da ponte técnica construída com o banco de dados.
+* **Orquestração via API (Toqan):** O agente utiliza a infraestrutura de IA do Grupo Prosus para acessar diretamente os dados do Metabase. Ele recebe a intenção no chat, aciona as consultas parametrizadas e devolve os dados brutos para interpretação.
+* **Construção de Queries Otimizadas (SQL):** Desenvolvimento de lógicas em SQL para buscar, cruzar e somar dados de volume transacional (GMV), ingressos vendidos e ticket médio.
+* **Visão Panorâmica do Lead:** A IA varre, identifica e agrupa o histórico de todos os IDs de um mesmo produtor simultaneamente, traduzindo dados brutos de banco de dados em um resumo narrativo claro.
 
-### Qualitativos
-- Qualificadores não precisam mais abrir Metabase manualmente
-- Substituição total de estimativas por dados reais do banco
-- Eliminação de digitação manual dos 24 campos
-- Padronização completa de dossiês com estrutura consistente
-- Rastreabilidade total de todas as informações comerciais
-- Democratização do acesso à inteligência de banco de dados
-- Liberação de tempo para análise estratégica ao invés de trabalho operacional
+### 2. Ingestão e Processamento Anti-Ruído
+* **Sanitização Base:** O agente faz o parsing do texto bruto de CRMs, eliminando automaticamente marcadores de sistema inúteis.
+* **Proteção de Contatos Original:** Algoritmos garantem que o contato estratégico mapeado não seja sobrescrito por decisores secundários identificados nos logs.
 
-### Em Produção
-Sistema entregue para toda a equipe de qualificação, democratizando acesso a dados do banco sem necessidade de conhecimento técnico do Metabase.
+### 3. Matriz de Inteligência de Produto (Classificação de Demandas)
+O agente mapeia as dores do lead e classifica a demanda internamente para direcionar a abordagem:
+* **Atendida Nativamente:** Destaca soluções prontas (ex: *Afiliados, Cortesia em Massa*) para gerar valor sem custo extra.
+* **Condicional / Alternativa:** Identifica cenários que exigem contratos específicos (*ex: Smart POS, Assento Marcado*).
+* **Não Atendida:** Registra limitações de escopo de forma transparente no dossiê técnico.
 
----
-
-## Fluxo de Trabalho
-
-### 1. Início da Qualificação
-Qualificador fornece ao agente:
-- Nome da empresa
-- Data de nutrição (hoje)
-
-### 2. Coleta Automática de Dados
-
-**Metabase (via API):**
-- Consulta banco de dados em tempo real
-- Extrai GMV histórico, User IDs, eventos, segmentos
-- Compila status comercial atual
-
-**Web Search:**
-- Pesquisa empresa, decisores, eventos
-- Identifica plataforma concorrente
-- Mapeia histórico comercial e contexto
-
-### 3. Geração do Dossiê
-- Organiza informações na estrutura hierárquica
-- Aplica rastreabilidade a todas as observações
-- Segue modelo narrativo padronizado
-- Preenche apenas campos com dados verificáveis
-
-### 4. Primeira Validação
-Verifica:
-- Formatação (CNPJ, telefone, estado)
-- Menus fechados
-- Campos obrigatórios
-- Dados críticos
-
-### 5. Busca na Planilha
-- Procura empresa por Nome (col. T) + Data (col. R)
-- Exibe resultado encontrado
-- Aguarda confirmação
-
-### 6. Segunda Validação
-Usuário revisa e:
-- Aprova → exportação automática
-- Ajusta → corrige e valida novamente
-
-### 7. Exportação
-- 24 campos preenchidos automaticamente
-- Linha correta identificada
-- Execução em uma única operação
-- Confirmação de sucesso
+### 4. Modelo Preditivo e Regras de Negócio Críticas
+* **Cálculo Ponderado:** Estimativa ponderada de Ticket e Público caso o produtor gerencie eventos de portes muito diferentes.
+* **Zero Alucinação:** Tolerância zero para dados fictícios. A orientação do prompt bloqueia inferências; campo sem dado validado é igual a campo vazio.
 
 ---
 
-## Arquitetura do Prompt
+## 🔒 Painel de Validação e Mapeamento de Dados
 
-O prompt foi estruturado em camadas funcionais:
+O processo de exportação conta com um ciclo rigoroso de auditoria. Após a IA extrair e estruturar os dados em tempo real, o agente busca a linha do lead, aguarda a aprovação e analisa 24 campos. Se houver um único erro de formatação, **a exportação é travada**.
 
-### Identidade e Regras
-- Definição clara do papel (Especialista de Inteligência LDR)
-- Regras críticas (zero alucinação, campos vazios, rastreabilidade)
-- Output obrigatório (lista formatada)
-
-### Validação e Exportação
-- Painel de validação completo
-- Fluxo de busca e confirmação
-- Mapeamento dos 24 campos
-- Campos que nunca devem ser preenchidos
-
-### Menus Fechados
-- Plataforma Concorrente (200+ opções mapeadas)
-- Frequência, Segmento, Tema, Subtema, Sazonalidade, Formatos
-- Demandas Ferramentais
-- Status e Identificação (informativos)
-
-### Hierarquia de Campos
-- Diferenciação clara entre informativo e exportável
-- Resumo Metabase vs Histórico Sympla
-- Histórico Comercial vs Contexto Adicional
-- Regras específicas de preenchimento para cada campo
-
-### Rastreabilidade
-- Padrões de citação obrigatórios
-- Nomes completos de responsáveis
-- IDs e datas quando disponíveis
-- Fonte e interpretação comercial
+### Critérios de Sanitização (Regex & Menus Fixos)
+* **CNPJ:** Conversão para número puro (sem pontuação).
+* **Telefone:** Máscara estrita no padrão `(XX) XXXXX-XXXX`.
+* **Estado:** Formato obrigatório `Nome do Estado (UF)`.
+* **Métricas Financeiras/Volumétricas:** Extração numérica pura.
+* **Menus Fechados:** Trava de opções exatas para *Segmento*, *Frequência*, *Demandas Ferramentais* e *Plataforma Concorrente*.
 
 ---
 
-## Diferenciais
+## 🚀 Resultados e Impacto
 
-### 1. Integração Real com Banco de Dados
-Não é só pesquisa na web - o agente **consulta dados operacionais reais** via API Metabase, algo raro em agentes de qualificação.
-
-### 2. Validação Multicamadas
-Sistema de duplo checkpoint garante qualidade antes da exportação, eliminando erros de importação no HubSpot.
-
-### 3. Estrutura Hierárquica Inteligente
-Separação clara entre dados informativos e exportáveis evita poluição da base e mantém informações úteis e padronizadas.
-
-### 4. Rastreabilidade Total
-Toda informação tem fonte identificável, permitindo auditorias e validação de contexto comercial.
-
-### 5. Zero Alucinação
-Política rigorosa de apenas dados verificáveis - se não tem fonte confiável, campo fica vazio.
-
-### 6. Democratização de Dados
-Qualquer membro da equipe acessa inteligência do banco de dados sem precisar conhecer SQL ou Metabase.
-
----
-
-## Aprendizados
-
-### Prompt Engineering
-- Arquitetura em camadas facilita manutenção e evolução
-- Regras explícitas e exemplos concretos reduzem ambiguidade
-- Validação programática complementa capacidade da IA
-
-### Integração de Sistemas
-- API Metabase permite acesso estruturado ao banco
-- Queries SQL em tempo real viabilizam dados sempre atualizados
-- Normalização é crítica para exportação sem erros
-
-### Gestão de Qualidade
-- Validação dupla elimina praticamente todos os erros
-- Rastreabilidade cria confiança nos dados
-- Padronização facilita treinamento e escalabilidade
-
-### Adoção
-- Democratização de dados complexos aumenta uso
-- Eliminação de trabalho manual aumenta engajamento
-- Feedback rápido (20min vs 40min) melhora experiência
-
----
-
-## Limitações & Próximos Passos
-
-### Limitações Atuais
-- Dependente de qualidade dos dados no Metabase
-- Requer aprovação manual antes de exportar (segurança vs velocidade)
-- Plataformas concorrentes não mapeadas caem em "Outra não mapeada"
-
-### Melhorias Futuras
-- Integração direta com HubSpot para puxar histórico de deals automaticamente
-- Machine learning para sugerir melhores abordagens baseado em leads similares
-- Expansão do mapeamento de plataformas concorrentes
-- Trigger automático para atualizar dossiês quando novos dados aparecem no Metabase
+* **Zero Digitação Manual:** Fim absoluto do trabalho repetitivo de preencher planilhas campo a campo.
+* **Redução de 50% no Tempo de Qualificação:** O SLA do processo caiu de ~40 para ~20 minutos por lead, impulsionado pela automação e busca de dados em tempo real via API.
+* **Democratização do Acesso a Dados:** A equipe de LDR agora acessa insights complexos de SQL e Metabase em linguagem natural, sem precisar dominar ferramentas de banco de dados.
+* **Falhas de Importação Zeradas:** O ciclo de dupla validação no preenchimento dos 24 campos garante que apenas dados perfeitos cheguem ao HubSpot.
 
 ---
 
 ## Autor
 
-**Maria Luiza Moraes**  
+**Maria Luiza Moraes**
 Estagiária • Estratégia, Gestão e M&A @ Sympla
 
-[LinkedIn](https://www.linkedin.com/in/maria-luiza-moraes-98a6b22a8/) • [GitHub](https://github.com/marialuizasm21)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maria-luiza-moraes-98a6b22a8/)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marialuizasm21)
 
 ---
-
-**Nota:** O prompt completo e lógica de negócio não estão disponíveis publicamente por conterem informações proprietárias. Este repositório serve como documentação do projeto para fins de portfólio.
+> **Nota de Confidencialidade:** Este repositório documenta a lógica de negócio, engenharia de dados e arquitetura de automação para fins de portfólio profissional. Códigos-fonte internos, queries originais em SQL, endpoints de API e esquemas privados de bancos de dados foram intencionalmente omitidos.
